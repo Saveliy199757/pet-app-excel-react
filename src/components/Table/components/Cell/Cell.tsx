@@ -1,16 +1,21 @@
 import React from 'react';
 
 interface IProps {
-    children: React.ReactNode;
+    children: React.ReactNode
 }
 
-const Cell = ({ children }: IProps) => {
-    const index = 1
-    const width = 2
+const Cell = ( { children }: IProps) => {
     return (
-        <div className="column unselectable" data-type="resizeble" data-key={index} style={{width: width}}>
-            ${children}
-            <div className="col-resize" data-resize="col"></div>
+        <div
+            className="cell"
+            contentEditable
+            data-key="${col}"
+            data-type="cell"
+            data-id="${id}"
+            data-value="${content || ''}"
+            //style="${styles}; width: ${width}"
+        >
+            ${children || ''}
         </div>
     );
 };

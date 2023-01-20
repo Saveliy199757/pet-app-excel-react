@@ -1,0 +1,93 @@
+@import "variables";
+@import "mixins";
+
+.excel__table {
+  position: absolute;
+  top: $header-height + $toolbar-height + $formula-height;
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 2px;
+  .row {
+    display: flex;
+    flex-direction: row;
+    min-height: 20px;
+    height: $row-height;
+  }
+  .col-resize, .row-resize {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: green;
+    opacity: 0;
+    z-index: 1000;
+    &:hover {
+      opacity: 1!important;
+    }
+  }
+  .row-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $cell-width;
+    height: 100%;
+    border: 1px solid $border-color;
+    background: #f8f9fa;
+    border-top: none;
+    position: relative;
+    .row-resize {
+      left: 0;
+      height: 4px;
+      &:hover {
+        cursor: row-resize;
+      }
+    }
+  }
+  .row-data {
+    display: flex;
+  }
+  .column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border: 1px solid $border-color;
+    width: $column-width;
+    min-width: 40px;
+    border-top: none;
+    border-left: none;
+    height: 100%;
+    position: relative;
+    .col-resize {
+      top: 0;
+      width: 4px;
+      &:hover {
+        cursor: col-resize;
+      }
+    }
+  }
+  .cell {
+    min-width: 40px;
+    padding: 5px;
+    width: $column-width;
+    height: 100%;
+    border: 1px solid #e2e3e3;
+    border-top: none;
+    border-left: none;
+    color: #111;
+    white-space: nowrap;
+    outline: none;
+    &.selected {
+      border: none;
+      outline: 2px solid #3c74ff;
+      z-index: 1;
+    }
+  }
+  .unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+  }
+}
