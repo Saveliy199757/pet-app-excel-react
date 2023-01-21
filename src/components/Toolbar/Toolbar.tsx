@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from "./components/Button";
 
 interface styleTextAlign {
     textAlign: string
@@ -28,38 +29,38 @@ const Toolbar = () => {
     const buttons: IButtons[] = [
         {
             icon: 'format_align_left',
-            active: state['textAlign'] === 'left',
+            active: /*state['textAlign'] === 'left'*/ false,
             value: {textAlign: 'left'}
         },
         {
             icon: 'format_align_center',
-            active: state['textAlign'] === 'center',
+            active: false /*state['textAlign'] === 'center'*/,
             value: {textAlign: 'center'}
         },
         {
             icon: 'format_align_right',
-            active: state['textAlign'] === 'right',
+            active: /*state['textAlign'] === 'right'*/ false,
             value: {textAlign: 'right'}
         },
         {
             icon: 'format_bold',
-            active: state['fontWeight'] === 'bold',
-            value: {fontWeight: state['fontWeight'] === 'bold' ? 'normal' : 'bold'}
+            active: /*state['fontWeight'] === 'bold'*/ false,
+            value: {fontWeight: /*state['fontWeight'] === 'bold' ? 'normal' :*/ 'bold'}
         },
         {
             icon: 'format_italic',
-            active: state['fontStyle'] === 'italic',
-            value: {fontStyle: state['fontStyle'] === 'italic' ? 'normal' : 'italic'}
+            active: /*state['fontStyle'] === 'italic'*/ false,
+            value: {fontStyle: /*state['fontStyle'] === 'italic' ? 'normal' :*/ 'italic'}
         },
         {
             icon: 'format_underlined',
-            active: state['textDecoration'] === 'underline',
-            value: {textDecoration: state['textDecoration'] === 'underline' ? 'none' : 'underline'}
+            active: /*state['textDecoration'] === 'underline'*/ false,
+            value: {textDecoration: /*state['textDecoration'] === 'underline' ? 'none' :*/ 'underline'}
         }
     ]
     return (
-        <div>
-            
+        <div className="excel__toolbar">
+            {buttons.map(button => <Button icon={button.icon} active={button.active} value={button.value}/>)}
         </div>
     );
 };
