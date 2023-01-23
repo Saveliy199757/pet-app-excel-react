@@ -11,7 +11,7 @@ const Row = ({ children, number, height  }: IProps) => {
         <div className="row" data-type="resizeble" data-key={number} style={{ height: height }}>
             <div className="row-info unselectable">
                 {number ? number : ""}
-                <div className="row-resize" data-resize="row"></div>
+                {number ? <div className="row-resize" data-resize="row"></div> : ""}
             </div>
             <div className="row-data">{children}</div>
         </div>
