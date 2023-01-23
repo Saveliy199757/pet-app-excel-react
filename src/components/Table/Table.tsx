@@ -1,6 +1,8 @@
 import React from 'react';
-import {CODE, defaultRowsCount} from "../../constans/table.constans";
+import {CODE, DEFAULT_HEIGHT_ROW, DEFAULT_WIDTH_CELL, defaultRowsCount} from "../../constans/table.constans";
 import Row from "./components/Row";
+import Coll from "./components/Coll";
+import Cell from "./components/Cell";
 
 interface IProps {
     rowsCount?: number;
@@ -15,16 +17,22 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
     const cols = new Array(colsCount)
         .fill('')
         .map(toChar)
-    const rows = new Array(colsCount).fill('')
+    const rows = new Array(rowsCount - 1).fill('')
     return (
-        <div>
-            {/*
-                rows.map((row, index) =>
-                <Row number={} height={} />
-
-                <Row>
-                )
-            */}
+        <div className="excel__table">
+            <Row height={DEFAULT_HEIGHT_ROW}>
+               {
+                  cols.map((contentColl,index) => <Coll index={index} width={DEFAULT_WIDTH_CELL}>{contentColl}</Coll> )
+               }
+            </Row>
+                {
+                    rows.map((row, index) => {
+                        const cell = new Array(colsCount)
+                            .fill('')
+                            .map(() => <Cell>{row}</Cell> )
+                        return <Row number={index + 1} height={DEFAULT_HEIGHT_ROW}>{cell}</Row>
+                    })
+                }
         </div>
     );
 };
