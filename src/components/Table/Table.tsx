@@ -18,6 +18,7 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
         .fill('')
         .map(toChar)
     const rows = new Array(rowsCount - 1).fill('')
+    const cell = new Array(colsCount).fill('')
     return (
         <div className="excel__table">
             <Row height={DEFAULT_HEIGHT_ROW}>
@@ -27,10 +28,8 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
             </Row>
                 {
                     rows.map((row, index) => {
-                        const cell = new Array(colsCount)
-                            .fill('')
-                            .map(() => <Cell>{row}</Cell> )
-                        return <Row number={index + 1} height={DEFAULT_HEIGHT_ROW}>{cell}</Row>
+                        const cellResult = cell.map(() => <Cell>{row}</Cell> )
+                        return <Row number={index + 1} height={DEFAULT_HEIGHT_ROW}>{cellResult}</Row>
                     })
                 }
         </div>

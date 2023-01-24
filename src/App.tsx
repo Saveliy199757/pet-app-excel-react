@@ -1,18 +1,16 @@
 import React from 'react';
 import './scss/index.scss'
-import Table from "./components/Table";
-import Formula from "./components/Formula";
-import Header from "./components/Header";
-import Toolbar from "./components/Toolbar";
+import {Route, Routes} from "react-router";
+import {CREATE_TABLE, TABLE} from "./urls";
+import CreateTable from "./pages/CreateTable";
+import ExcelTable from "./pages/ExcelTable";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Toolbar />
-      <Formula />
-      <Table/>
-    </div>
+      <Routes>
+          <Route path={CREATE_TABLE} element={<CreateTable />} />
+          <Route path={TABLE} element={<ExcelTable />} />
+      </Routes>
   );
 }
 
