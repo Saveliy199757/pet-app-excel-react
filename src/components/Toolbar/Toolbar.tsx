@@ -60,7 +60,7 @@ const Toolbar = () => {
     ]
     return (
         <div className="excel__toolbar">
-            {buttons.map(button => <Button icon={button.icon} active={button.active} value={button.value}/>)}
+            {buttons.map((button, index) => <Button key={index} icon={button.icon} active={button.active} value={button.value}/>)}
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import RowResizer from "./RowResizer";
 
 interface IProps {
@@ -8,11 +8,12 @@ interface IProps {
 }
 
 const Row = ({ children, number, height  }: IProps) => {
+    const [rowHeight, setRowHeight] = useState(height)
     return (
-        <div className="row" data-type="resizeble" data-key={number} style={{ height: height }}>
+        <div className="row" data-type="resizeble" data-key={number} style={{ height: rowHeight }}>
             <div className="row-info unselectable">
                 {number ? number : ""}
-                {number ? <RowResizer /> : ""}
+                {number ? <RowResizer setRowHeight={setRowHeight} /> : ""}
             </div>
             <div className="row-data">{children}</div>
         </div>

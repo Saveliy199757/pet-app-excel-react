@@ -23,13 +23,13 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
         <div className="excel__table">
             <Row height={DEFAULT_HEIGHT_ROW}>
                {
-                  cols.map((contentColl,index) => <Coll index={index} width={DEFAULT_WIDTH_CELL}>{contentColl}</Coll> )
+                  cols.map((contentColl,index) => <Coll key={index} index={index} width={DEFAULT_WIDTH_CELL}>{contentColl}</Coll> )
                }
             </Row>
                 {
                     rows.map((row, index) => {
-                        const cellResult = cell.map(() => <Cell>{row}</Cell> )
-                        return <Row number={index + 1} height={DEFAULT_HEIGHT_ROW}>{cellResult}</Row>
+                        const cellResult = cell.map((_, index) => <Cell key={index}>{row}</Cell> )
+                        return <Row key={index} number={index + 1} height={DEFAULT_HEIGHT_ROW}>{cellResult}</Row>
                     })
                 }
         </div>

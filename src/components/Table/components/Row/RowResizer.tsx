@@ -1,7 +1,12 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {DEFAULT_ROW_INFO_WIDTH} from "../../../../constans/table.constans";
 
-const RowResizer = () => {
+interface IProps {
+    setRowHeight: (h: number) => void
+}
+
+const RowResizer = ( { setRowHeight }: IProps ) => {
+    const ref = useRef(null);
     const [width, setWidth] = useState<number>()
     const [position, setPosition] = useState({
         y: 50,
@@ -19,17 +24,19 @@ const RowResizer = () => {
             };
         });
     }
+    const getRec = () => {
+        const  element = ref.current
+        console.log()
+    }
     return (
         <div
             className="row-resize"
             data-resize="row"
+            ref={ref}
             style={{width: width + "px"}}
-            onMouseDown={() => setWidth(5000) }
+            onMouseDown={() => setRowHeight(100) }
             onMouseUp={() => setWidth(DEFAULT_ROW_INFO_WIDTH - 1)}
-            onMouseMove={(event) => console.log({
-                "button": event.button,
-                "event": event
-            })}
+            onMouseMove={(event) => console.log()}
         >
         </div>
     );
