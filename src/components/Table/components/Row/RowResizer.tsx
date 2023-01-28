@@ -3,9 +3,10 @@ import { DEFAULT_ROW_INFO_WIDTH } from "../../../../constans/table.constans";
 
 interface IProps {
   setRowHeight: (h: number) => void;
+  rowBottom: number;
 }
 
-const RowResizer = ({ setRowHeight }: IProps) => {
+const RowResizer = ({ setRowHeight, rowBottom }: IProps) => {
   const ref = useRef<any>(null);
   const [width, setWidth] = useState<number>(0);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
@@ -27,14 +28,12 @@ const RowResizer = ({ setRowHeight }: IProps) => {
         setIsMouseDown(false);
         setOpacity(0);
       }}
-      onMouseMove={(event) => {
+      onPointerMove={(event) => {
         if (isMouseDown) {
-          const delta =
-            event.clientY -
-            Math.round(ref.current.getBoundingClientRect().bottom);
+          const delta = event.clientY - rowBottom;
           console.log({
             delta,
-            bottom: ref.current.getBoundingClientRect().bottom,
+            bottom: rowBottom,
             clientY: event.clientY,
           });
           setBottom(-delta);
