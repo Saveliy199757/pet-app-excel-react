@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { DEFAULT_ROW_INFO_WIDTH } from "../../../../constans/table.constans";
 
 interface IProps {
@@ -12,6 +18,25 @@ const RowResizer = ({ setRowHeight, rowBottom }: IProps) => {
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
   const [bottom, setBottom] = useState<number>(0);
   const [opacity, setOpacity] = useState(0);
+  const [clientY, setClientY] = useState(0);
+
+  const handleOnMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (isMouseDown) {
+        console.log("sdf");
+        const delta = e.clientY - rowBottom;
+        setBottom(-delta);
+      }
+    },
+    [isMouseDown]
+  );
+
+  useLayoutEffect(() => {
+    document.addEventListener("mousemove", handleOnMouseMove, {
+      passive: true,
+    });
+  }, [isMouseDown]);
+
   return (
     <div
       className="row-resize"
@@ -28,16 +53,8 @@ const RowResizer = ({ setRowHeight, rowBottom }: IProps) => {
         setIsMouseDown(false);
         setOpacity(0);
       }}
-      onPointerMove={(event) => {
-        if (isMouseDown) {
-          const delta = event.clientY - rowBottom;
-          console.log({
-            delta,
-            bottom: rowBottom,
-            clientY: event.clientY,
-          });
-          setBottom(-delta);
-        }
+      onMouseMove={(event) => {
+        /*console.log(event);*/
       }}
     ></div>
   );
