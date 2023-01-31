@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
 import {
   CODE,
   DEFAULT_HEIGHT_ROW,
@@ -22,6 +22,9 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
   const cols = new Array(colsCount).fill("").map(toChar);
   const rows = new Array(rowsCount - 1).fill("");
   const cell = new Array(colsCount).fill("");
+
+  const refs = useMemo(() => rows.map(() => createRef()), [rows]);
+
   return (
     <div className="excel__table">
       <Row height={DEFAULT_HEIGHT_ROW}>
@@ -36,7 +39,11 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
           <Cell key={index}>{row}</Cell>
         ));
         return (
-          <Row key={index} number={index + 1} height={DEFAULT_HEIGHT_ROW}>
+          <Row
+            key={index}
+            number={index + 1}
+            height={DEFAULT_HEIGHT_ROW}
+          >
             {cellResult}
           </Row>
         );

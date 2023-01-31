@@ -8,15 +8,16 @@ interface IProps {
 }
 
 const Row = ({ children, number, height }: IProps) => {
-  const [rowHeight, setRowHeight] = useState(height);
+  const [rowHeight, setRowHeight] = useState(0);
   const refRow = useRef<any>(null);
   const [rowBottom, setRowBottom] = useState(0);
 
   useEffect(() => {
     if (refRow.current) {
       setRowBottom(Math.round(refRow.current.getBoundingClientRect().bottom));
+      setRowHeight(Math.round(refRow.current.getBoundingClientRect().height));
     }
-  });
+  }, [rowHeight, rowBottom]);
 
   return (
     <div
@@ -29,7 +30,11 @@ const Row = ({ children, number, height }: IProps) => {
       <div className="row-info unselectable">
         {number ? number : ""}
         {number ? (
-          <RowResizer setRowHeight={setRowHeight} rowBottom={rowBottom} />
+          <RowResizer
+            setRowHeight={setRowHeight}
+            rowBottom={rowBottom}
+            rowHeight={rowHeight}
+          />
         ) : (
           ""
         )}
