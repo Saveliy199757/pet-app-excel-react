@@ -1,30 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  ReactHTMLElement,
+  useRef,
+  useState,
+} from "react";
 import RowResizer from "./RowResizer";
 
 interface IProps {
   children: React.ReactNode;
   number?: number;
-  height: number;
 }
 
-const Row = ({ children, number, height }: IProps) => {
-  const [rowHeight, setRowHeight] = useState(0);
-  const refRow = useRef<any>(null);
-  const [rowBottom, setRowBottom] = useState(0);
+const RowContext = createContext(null);
 
-  useEffect(() => {
-    if (refRow.current) {
-      setRowBottom(Math.round(refRow.current.getBoundingClientRect().bottom));
-      setRowHeight(Math.round(refRow.current.getBoundingClientRect().height));
-    }
-  }, [rowHeight, rowBottom]);
+const Row = ({ children, number }: IProps) => {
+  const [rowHeight, setRowHeight] = useState<number>(0);
+  const [rowBottom, setRowBottom] = useState<number>(0);
+  const refRow = useRef<any>(null);
 
   return (
     <div
       ref={refRow}
       className="row"
-      data-type="resizeble"
       data-key={number}
+      onMouseDown={() => {
+        if (refRow.current) {
+          setRowBottom(
+            Math.round(refRow.current.getBoundingClientRect().bottom)
+          );
+          setRowHeight(
+            Math.round(refRow.current.getBoundingClientRect().height)
+          );
+        }
+      }}
       style={{ height: rowHeight }}
     >
       <div className="row-info unselectable">
