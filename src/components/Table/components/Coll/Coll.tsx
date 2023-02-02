@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import CollResizer from "./CollResizer";
+import Resizer from "../Resizer";
 
 interface IProps {
   children: React.ReactNode;
@@ -30,10 +30,11 @@ const Coll = ({ children, index, width }: IProps) => {
       }}
     >
       {children}
-      <CollResizer
-        setCollWidth={setCollWidth}
-        collRight={collRight}
-        collWidth={collWidth}
+      <Resizer
+        isResizeRow={false}
+        setWidth={setCollWidth}
+        right={collRight}
+        width={collWidth}
       />
     </div>
   );

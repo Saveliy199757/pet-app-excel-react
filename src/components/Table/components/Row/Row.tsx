@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import RowResizer from "./RowResizer";
+import Resizer from "../Resizer";
 
 interface IProps {
   children: React.ReactNode;
@@ -31,10 +31,11 @@ const Row = ({ children, number }: IProps) => {
       <div className="row-info unselectable">
         {number ? number : ""}
         {number ? (
-          <RowResizer
-            setRowHeight={setRowHeight}
-            rowBottom={rowBottom}
-            rowHeight={rowHeight}
+          <Resizer
+            isResizeRow={true}
+            setWidth={setRowHeight}
+            bottom={rowBottom}
+            height={rowHeight}
           />
         ) : (
           ""

@@ -1,31 +1,42 @@
 import React, { useCallback, useLayoutEffect, useState } from "react";
 
 interface IProps {
-  setCollWidth: (width: number) => void;
-  collRight: number;
-  collWidth: number;
+  isResizeRow: boolean;
+  setWidth: (width: number) => void;
+  width?: number;
+  height?: number;
+  right?: number;
+  bottom?: number;
 }
 
-const CollResizer = ({ setCollWidth, collRight, collWidth }: IProps) => {
-  const [fullHeightResizer, setFullHeightResizer] = useState<boolean>(false);
+const Resizer = ({
+  isResizeRow = false,
+  setWidth,
+  width = 0,
+  height = 0,
+  right = 0,
+  bottom = 0,
+}: IProps) => {
+  const [fullWidth, setFullWidth] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
   const [valueResize, setValueResize] = useState<number>(0);
-  const [right, setRight] = useState<number>(0);
+  const [propertyStyle, setPropertyStyle] = useState<number>(0);
   const [opacity, setOpacity] = useState(0);
 
   const resetState = useCallback(() => {
-    setFullHeightResizer(false);
+    setFullWidth(false);
     setIsMouseDown(false);
     setOpacity(0);
-    setRight(0);
+    setPropertyStyle(0);
   }, []);
 
   const handleOnMouseMove = useCallback(
     (e: MouseEvent) => {
       if (isMouseDown) {
-        const delta = e.clientX - collRight;
-        setValueResize(collWidth + delta);
-        setRight(-delta);
+        const delta = isResizeRow ? e.clientY - bottom : e.clientX - right;
+        const resize = isResizeRow ? height + delta : width + delta;
+        setValueResize(resize);
+        setPropertyStyle(-delta);
       }
     },
     [isMouseDown]
@@ -33,7 +44,7 @@ const CollResizer = ({ setCollWidth, collRight, collWidth }: IProps) => {
 
   const handleOnMouseUp = useCallback(() => {
     if (isMouseDown) {
-      valueResize > 0 && setCollWidth(valueResize);
+      valueResize > 0 && setWidth(valueResize);
       resetState();
     }
   }, [isMouseDown, valueResize]);
@@ -50,21 +61,21 @@ const CollResizer = ({ setCollWidth, collRight, collWidth }: IProps) => {
 
   return (
     <div
-      className="col-resize"
-      data-resize="col"
+      className={isResizeRow ? "row-resize" : "col-resize"}
+      data-resize="row"
       style={{
         opacity: opacity,
-        right: right + "px",
-        bottom: fullHeightResizer ? -5000 : 0 + "px",
+        right: isResizeRow ? (fullWidth ? -5000 : 0 + "px") : propertyStyle,
+        bottom: !isResizeRow ? (fullWidth ? -5000 : 0 + "px") : propertyStyle,
       }}
       onMouseDown={() => {
         setValueResize(0);
         setIsMouseDown(true);
-        setFullHeightResizer(true);
+        setFullWidth(true);
         setOpacity(1);
       }}
     ></div>
   );
 };
 
-export default CollResizer;
+export default Resizer;
