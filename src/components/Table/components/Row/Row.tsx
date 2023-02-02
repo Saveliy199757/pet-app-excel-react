@@ -1,17 +1,10 @@
-import React, {
-  createContext,
-  ReactHTMLElement,
-  useRef,
-  useState,
-} from "react";
+import React, { useRef, useState } from "react";
 import RowResizer from "./RowResizer";
 
 interface IProps {
   children: React.ReactNode;
   number?: number;
 }
-
-const RowContext = createContext(null);
 
 const Row = ({ children, number }: IProps) => {
   const [rowHeight, setRowHeight] = useState<number>(0);

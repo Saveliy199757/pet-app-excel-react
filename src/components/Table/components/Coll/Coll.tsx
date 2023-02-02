@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import CollResizer from "./CollResizer";
-import { DEFAULT_WIDTH_CELL } from "../../../../constans/table.constans";
 
 interface IProps {
   children: React.ReactNode;
@@ -10,14 +9,25 @@ interface IProps {
 
 const Coll = ({ children, index, width }: IProps) => {
   const [collRight, setCollRight] = useState(0);
-  const [collWidth, setCollWidth] = useState(DEFAULT_WIDTH_CELL);
+  const [collWidth, setCollWidth] = useState(width);
   const refColl = useRef<any>(null);
   return (
     <div
+      ref={refColl}
       className="column unselectable"
       data-type="resizeble"
       data-key={index}
       style={{ width: collWidth }}
+      onMouseDown={() => {
+        if (refColl.current) {
+          setCollRight(
+            Math.round(refColl.current.getBoundingClientRect().right)
+          );
+          setCollWidth(
+            Math.round(refColl.current.getBoundingClientRect().width)
+          );
+        }
+      }}
     >
       {children}
       <CollResizer
