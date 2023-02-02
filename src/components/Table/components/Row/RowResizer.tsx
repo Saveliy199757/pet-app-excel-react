@@ -9,7 +9,7 @@ interface IProps {
 const RowResizer = ({ setRowHeight, rowBottom, rowHeight }: IProps) => {
   const [fullWidthResizer, setFullWidthResizer] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
-  const [valueResizer, setValueResizer] = useState<number>(0);
+  const [valueResize, setValueResize] = useState<number>(0);
   const [bottom, setBottom] = useState<number>(0);
   const [opacity, setOpacity] = useState(0);
 
@@ -24,7 +24,7 @@ const RowResizer = ({ setRowHeight, rowBottom, rowHeight }: IProps) => {
     (e: MouseEvent) => {
       if (isMouseDown) {
         const delta = e.clientY - rowBottom;
-        setValueResizer(rowHeight + delta);
+        setValueResize(rowHeight + delta);
         setBottom(-delta);
       }
     },
@@ -33,10 +33,10 @@ const RowResizer = ({ setRowHeight, rowBottom, rowHeight }: IProps) => {
 
   const handleOnMouseUp = useCallback(() => {
     if (isMouseDown) {
-      valueResizer > 0 && setRowHeight(valueResizer);
+      valueResize > 0 && setRowHeight(valueResize);
       resetState();
     }
-  }, [isMouseDown, valueResizer]);
+  }, [isMouseDown, valueResize]);
 
   useLayoutEffect(() => {
     document.addEventListener("mousemove", handleOnMouseMove);
@@ -46,7 +46,7 @@ const RowResizer = ({ setRowHeight, rowBottom, rowHeight }: IProps) => {
       document.removeEventListener("mousemove", handleOnMouseMove);
       document.removeEventListener("mouseup", handleOnMouseUp);
     };
-  }, [isMouseDown, valueResizer]);
+  }, [isMouseDown, valueResize]);
 
   return (
     <div
@@ -58,7 +58,7 @@ const RowResizer = ({ setRowHeight, rowBottom, rowHeight }: IProps) => {
         bottom: bottom + "px",
       }}
       onMouseDown={() => {
-        setValueResizer(0);
+        setValueResize(0);
         setIsMouseDown(true);
         setFullWidthResizer(true);
         setOpacity(1);
