@@ -34,12 +34,12 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
           </Coll>
         ))}
       </Row>
-      {rows.map((row, index) => {
+      {rows.map((row, rowIndex) => {
         const cellResult = cell.map((_, index) => (
           <Cell key={index}>{row}</Cell>
         ));
         return (
-          <Row key={index} number={index + 1}>
+          <Row key={rowIndex} number={rowIndex + 1}>
             {cellResult}
           </Row>
         );
