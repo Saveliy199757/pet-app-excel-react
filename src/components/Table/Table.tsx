@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   CODE,
   DEFAULT_WIDTH_CELL,
@@ -28,6 +28,10 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
   //const rows = useMemo(() => new Array(rowsCount - 1).fill(""), [rowsCount]);
   const { rows } = useTypedSelector((state) => state.excelTable);
 
+  console.log({ rows });
+
+  const { fetchExcelTableData } = useActions();
+
   return (
     <div className="excel__table">
       <Row>
@@ -37,7 +41,7 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
           </Coll>
         ))}
       </Row>
-      {rows.map((row, rowIndex) => {
+      {rows.map((row) => {
         const cellResult = row.cells.map((cell, index) => (
           <Cell key={cell.id} width={cell.width}></Cell>
         ));

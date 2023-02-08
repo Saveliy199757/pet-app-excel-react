@@ -9,3 +9,9 @@ export const setRowHeight = (id: number, height: number): ExcelTableAction => {
     payload: { id, height },
   };
 };
+
+export const fetchExcelTableData = (): ExcelTableAction => {
+  return {
+    type: ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA,
+  };
+};

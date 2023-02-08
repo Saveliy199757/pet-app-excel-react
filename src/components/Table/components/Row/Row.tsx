@@ -32,6 +32,7 @@ const Row = ({ children, number }: IProps) => {
         {number ? number : ""}
         {number ? (
           <Resizer
+            id={number}
             isResizeRow={true}
             setWidth={setRowHeight}
             bottom={rowBottom}

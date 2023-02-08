@@ -13,6 +13,7 @@ export interface ExcelTable {
 export enum ExcelTableActionTypes {
   CHANGE_ROW_HEIGHT = "CHANGE_ROW_HEIGHT",
   CHANGE_CELLS_WIDTH = "CHANGE_CELLS_WIDTH",
+  FETCH_EXCEL_TABLE_DATA = "FETCH_EXCEL_TABLE_DATA",
 }
 interface ChangeRowHeightAction {
   type: ExcelTableActionTypes.CHANGE_ROW_HEIGHT;
@@ -27,4 +28,10 @@ interface ChangeCellsWidthAction {
     ids: number[];
   };
 }
-export type ExcelTableAction = ChangeRowHeightAction | ChangeCellsWidthAction;
+interface FetchExcelTableData {
+  type: ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA;
+}
+export type ExcelTableAction =
+  | ChangeRowHeightAction
+  | ChangeCellsWidthAction
+  | FetchExcelTableData;

@@ -31,6 +31,7 @@ const Coll = ({ children, index, width }: IProps) => {
     >
       {children}
       <Resizer
+        id={index}
         isResizeRow={false}
         setWidth={setCollWidth}
         right={collRight}

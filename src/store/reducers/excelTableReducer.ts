@@ -25,9 +25,11 @@ export const excelTableReducer = (
               height: action.payload.height,
             };
           }
-          return { ...row };
+          return row;
         }),
       };
+    case ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA:
+      return { ...state };
     default:
       return state;
   }

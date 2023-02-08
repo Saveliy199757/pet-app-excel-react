@@ -2,6 +2,7 @@ import React, { useCallback, useLayoutEffect, useState } from "react";
 import { useActions } from "../../../../hooks/useActions";
 
 interface IProps {
+  id: number;
   isResizeRow: boolean;
   setWidth: (width: number) => void;
   width?: number;
@@ -11,6 +12,7 @@ interface IProps {
 }
 
 const Resizer = ({
+  id,
   isResizeRow = false,
   setWidth,
   width = 0,
@@ -47,7 +49,7 @@ const Resizer = ({
 
   const handleOnMouseUp = useCallback(() => {
     if (isMouseDown) {
-      valueResize > 0 && setWidth(valueResize);
+      valueResize > 0 && setRowHeight(id, valueResize);
       resetState();
     }
   }, [isMouseDown, valueResize]);
