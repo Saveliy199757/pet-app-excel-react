@@ -7,6 +7,8 @@ import {
 import Row from "./components/Row";
 import Coll from "./components/Coll";
 import Cell from "./components/Cell";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
 interface IProps {
   rowsCount?: number;
@@ -22,8 +24,9 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
     () => new Array(colsCount).fill("").map(toChar),
     [colsCount]
   );
-  const rows = useMemo(() => new Array(rowsCount - 1).fill(""), [rowsCount]);
   const cell = useMemo(() => new Array(colsCount).fill(""), [colsCount]);
+  //const rows = useMemo(() => new Array(rowsCount - 1).fill(""), [rowsCount]);
+  const { rows } = useTypedSelector((state) => state.excelTable);
 
   return (
     <div className="excel__table">
@@ -35,11 +38,11 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
         ))}
       </Row>
       {rows.map((row, rowIndex) => {
-        const cellResult = cell.map((_, index) => (
-          <Cell key={index}>{row}</Cell>
+        const cellResult = row.cells.map((cell, index) => (
+          <Cell key={cell.id} width={cell.width}></Cell>
         ));
         return (
-          <Row key={rowIndex} number={rowIndex + 1}>
+          <Row key={row.id} number={row.id}>
             {cellResult}
           </Row>
         );

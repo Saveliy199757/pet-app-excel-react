@@ -1,4 +1,5 @@
 import React, { useCallback, useLayoutEffect, useState } from "react";
+import { useActions } from "../../../../hooks/useActions";
 
 interface IProps {
   isResizeRow: boolean;
@@ -22,6 +23,8 @@ const Resizer = ({
   const [valueResize, setValueResize] = useState<number>(0);
   const [propertyStyle, setPropertyStyle] = useState<number>(0);
   const [opacity, setOpacity] = useState(0);
+
+  const { setRowHeight } = useActions();
 
   const resetState = useCallback(() => {
     setFullWidth(false);
