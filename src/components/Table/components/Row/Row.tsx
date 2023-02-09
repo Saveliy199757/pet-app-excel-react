@@ -4,10 +4,11 @@ import Resizer from "../Resizer";
 interface IProps {
   children: React.ReactNode;
   number?: number;
+  height: number;
 }
 
-const Row = ({ children, number }: IProps) => {
-  const [rowHeight, setRowHeight] = useState<number>(0);
+const Row = ({ children, number, height }: IProps) => {
+  const [rowHeight, setRowHeight] = useState<number>(height);
   const [rowBottom, setRowBottom] = useState<number>(0);
   const refRow = useRef<any>(null);
 
@@ -26,7 +27,7 @@ const Row = ({ children, number }: IProps) => {
           );
         }
       }}
-      style={{ height: rowHeight }}
+      style={{ height: height }}
     >
       <div className="row-info unselectable">
         {number ? number : ""}
@@ -34,7 +35,6 @@ const Row = ({ children, number }: IProps) => {
           <Resizer
             id={number}
             isResizeRow={true}
-            setWidth={setRowHeight}
             bottom={rowBottom}
             height={rowHeight}
           />

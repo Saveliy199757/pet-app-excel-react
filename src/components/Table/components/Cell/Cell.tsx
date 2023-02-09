@@ -11,7 +11,7 @@ const Cell = ({ children, width }: IProps) => {
     <div
       className="cell"
       style={{ width }}
-      contentEditable
+      //contentEditable
       data-key="${col}"
       data-type="cell"
       data-id="${id}"

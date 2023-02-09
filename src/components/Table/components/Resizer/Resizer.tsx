@@ -4,7 +4,6 @@ import { useActions } from "../../../../hooks/useActions";
 interface IProps {
   id: number;
   isResizeRow: boolean;
-  setWidth: (width: number) => void;
   width?: number;
   height?: number;
   right?: number;
@@ -14,7 +13,6 @@ interface IProps {
 const Resizer = ({
   id,
   isResizeRow = false,
-  setWidth,
   width = 0,
   height = 0,
   right = 0,
@@ -26,7 +24,7 @@ const Resizer = ({
   const [propertyStyle, setPropertyStyle] = useState<number>(0);
   const [opacity, setOpacity] = useState(0);
 
-  const { setRowHeight } = useActions();
+  const { setRowHeight, setCellsWidth } = useActions();
 
   const resetState = useCallback(() => {
     setFullWidth(false);
@@ -49,7 +47,10 @@ const Resizer = ({
 
   const handleOnMouseUp = useCallback(() => {
     if (isMouseDown) {
-      valueResize > 0 && setRowHeight(id, valueResize);
+      valueResize > 0 &&
+        (isResizeRow
+          ? setRowHeight(id, valueResize)
+          : setCellsWidth(id, valueResize));
       resetState();
     }
   }, [isMouseDown, valueResize]);

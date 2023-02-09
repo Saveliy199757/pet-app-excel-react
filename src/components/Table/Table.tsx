@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import {
   CODE,
+  DEFAULT_HEIGHT_ROW,
   DEFAULT_WIDTH_CELL,
   defaultRowsCount,
 } from "../../constans/table.constans";
@@ -8,36 +9,20 @@ import Row from "./components/Row";
 import Coll from "./components/Coll";
 import Cell from "./components/Cell";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { useActions } from "../../hooks/useActions";
 
 interface IProps {
   rowsCount?: number;
 }
 
-function toChar(el?: any, index?: any) {
-  return String.fromCharCode(CODE.A + index);
-}
-
 const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
-  const colsCount = useMemo(() => CODE.Z - CODE.A + 1, []);
-  const cols = useMemo(
-    () => new Array(colsCount).fill("").map(toChar),
-    [colsCount]
-  );
-  const cell = useMemo(() => new Array(colsCount).fill(""), [colsCount]);
-  //const rows = useMemo(() => new Array(rowsCount - 1).fill(""), [rowsCount]);
-  const { rows } = useTypedSelector((state) => state.excelTable);
-
-  console.log({ rows });
-
-  const { fetchExcelTableData } = useActions();
+  const { rows, colls } = useTypedSelector((state) => state.excelTable);
 
   return (
     <div className="excel__table">
-      <Row>
-        {cols.map((contentColl, index) => (
-          <Coll key={index} index={index} width={DEFAULT_WIDTH_CELL}>
-            {contentColl}
+      <Row height={DEFAULT_HEIGHT_ROW}>
+        {colls.map((coll, index) => (
+          <Coll key={coll.id} index={coll.id} width={coll.width}>
+            {coll.content}
           </Coll>
         ))}
       </Row>
@@ -46,7 +31,7 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
           <Cell key={cell.id} width={cell.width}></Cell>
         ));
         return (
-          <Row key={row.id} number={row.id}>
+          <Row key={row.id} number={row.id} height={row.height}>
             {cellResult}
           </Row>
         );

@@ -17,7 +17,7 @@ const Coll = ({ children, index, width }: IProps) => {
       className="column unselectable"
       data-type="resizeble"
       data-key={index}
-      style={{ width: collWidth }}
+      style={{ width: width }}
       onMouseDown={() => {
         if (refColl.current) {
           setCollRight(
@@ -33,7 +33,6 @@ const Coll = ({ children, index, width }: IProps) => {
       <Resizer
         id={index}
         isResizeRow={false}
-        setWidth={setCollWidth}
         right={collRight}
         width={collWidth}
       />
