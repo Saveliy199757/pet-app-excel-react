@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo } from "react";
 import {
   CODE,
   DEFAULT_HEIGHT_ROW,
@@ -16,6 +16,15 @@ interface IProps {
 
 const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
   const { rows, colls } = useTypedSelector((state) => state.excelTable);
+  const handleOnKeyPress = useCallback((event: KeyboardEvent) => {
+    console.log(event);
+  }, []);
+  useLayoutEffect(() => {
+    document.addEventListener("keypress", handleOnKeyPress);
+    return () => {
+      document.removeEventListener("keypress", handleOnKeyPress);
+    };
+  }, []);
 
   return (
     <div className="excel__table">
