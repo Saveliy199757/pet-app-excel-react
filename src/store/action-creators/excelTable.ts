@@ -17,6 +17,13 @@ export const setCellsWidth = (id: number, width: number): ExcelTableAction => {
   };
 };
 
+export const selectCell = (id: number, rowId: number): ExcelTableAction => {
+  return {
+    type: ExcelTableActionTypes.SELECT_CELL,
+    payload: { id: id, rowId: rowId },
+  };
+};
+
 export const fetchExcelTableData = (): ExcelTableAction => {
   return {
     type: ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA,

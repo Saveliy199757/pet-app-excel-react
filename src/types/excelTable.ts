@@ -1,6 +1,7 @@
 export interface Cell {
   id: number;
   width: number;
+  isSelect: boolean;
 }
 export interface Row {
   id: number;
@@ -19,6 +20,7 @@ export interface ExcelTable {
 export enum ExcelTableActionTypes {
   CHANGE_ROW_HEIGHT = "CHANGE_ROW_HEIGHT",
   CHANGE_COLLS_WIDTH = "CHANGE_COLLS_WIDTH",
+  SELECT_CELL = "SELECT_CELL",
   FETCH_EXCEL_TABLE_DATA = "FETCH_EXCEL_TABLE_DATA",
 }
 interface ChangeRowHeightAction {
@@ -35,10 +37,20 @@ interface ChangeCollsWidthAction {
     width: number;
   };
 }
+
+interface SelectCell {
+  type: ExcelTableActionTypes.SELECT_CELL;
+  payload: {
+    id: number;
+    rowId: number;
+  };
+}
+
 interface FetchExcelTableData {
   type: ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA;
 }
 export type ExcelTableAction =
   | ChangeRowHeightAction
   | ChangeCollsWidthAction
-  | FetchExcelTableData;
+  | FetchExcelTableData
+  | SelectCell;

@@ -57,6 +57,38 @@ export const excelTableReducer = (
           };
         }),
       };
+    case ExcelTableActionTypes.SELECT_CELL:
+      return {
+        ...state,
+        rows: state.rows.map((row) => {
+          if (row.id === action.payload.rowId) {
+            return {
+              ...row,
+              cells: row.cells.map((cell) => {
+                if (cell.id === action.payload.id) {
+                  return {
+                    ...cell,
+                    isSelect: true,
+                  };
+                }
+                return {
+                  ...cell,
+                  isSelect: false,
+                };
+              }),
+            };
+          }
+          return {
+            ...row,
+            cells: row.cells.map((cell) => {
+              return {
+                ...cell,
+                isSelect: false,
+              };
+            }),
+          };
+        }),
+      };
     case ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA:
       return { ...state };
     default:

@@ -26,9 +26,9 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
           </Coll>
         ))}
       </Row>
-      {rows.map((row) => {
-        const cellResult = row.cells.map((cell, index) => (
-          <Cell key={cell.id} width={cell.width}></Cell>
+      {rows.map((row, rowId) => {
+        const cellResult = row.cells.map((cell) => (
+          <Cell key={cell.id} rowId={rowId + 1} {...cell}></Cell>
         ));
         return (
           <Row key={row.id} number={row.id} height={row.height}>

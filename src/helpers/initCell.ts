@@ -7,6 +7,7 @@ export const initCell = (): Cell[] => {
     return {
       id: i + 1,
       width: DEFAULT_WIDTH_CELL,
+      isSelect: false,
     };
   });
 };
