@@ -22,7 +22,7 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
     (state) => state.excelTable
   );
   const { selectCell } = useActions();
-  const handleOnKeyPress = useCallback(
+  const handleOnKeyDown = useCallback(
     (event: KeyboardEvent) => {
       const { rowId, cellId } = transformActiveCellInObj(activeCell);
       const result = nextCell(event.key, Number(rowId), Number(cellId));
@@ -31,9 +31,9 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
     [activeCell]
   );
   useEffect(() => {
-    document.addEventListener("keydown", handleOnKeyPress);
+    document.addEventListener("keydown", handleOnKeyDown, { passive: true });
     return () => {
-      document.removeEventListener("keydown", handleOnKeyPress);
+      document.removeEventListener("keydown", handleOnKeyDown);
     };
   }, [activeCell]);
 

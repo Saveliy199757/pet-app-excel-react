@@ -56,8 +56,10 @@ const Resizer = ({
   }, [isMouseDown, valueResize]);
 
   useLayoutEffect(() => {
-    document.addEventListener("mousemove", handleOnMouseMove);
-    document.addEventListener("mouseup", handleOnMouseUp);
+    document.addEventListener("mousemove", handleOnMouseMove, {
+      passive: true,
+    });
+    document.addEventListener("mouseup", handleOnMouseUp, { passive: true });
 
     return () => {
       document.removeEventListener("mousemove", handleOnMouseMove);
