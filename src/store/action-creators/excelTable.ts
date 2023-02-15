@@ -20,7 +20,18 @@ export const setCellsWidth = (id: number, width: number): ExcelTableAction => {
 export const selectCell = (id: number, rowId: number): ExcelTableAction => {
   return {
     type: ExcelTableActionTypes.SELECT_CELL,
-    payload: { id: id, rowId: rowId },
+    payload: { id, rowId },
+  };
+};
+
+export const setTextCell = (text: string, rowId: number, cellId: number) => {
+  return {
+    type: ExcelTableActionTypes.SET_TEXT_CELL,
+    payload: {
+      text,
+      rowId,
+      cellId,
+    },
   };
 };
 

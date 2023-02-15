@@ -65,6 +65,27 @@ export const excelTableReducer = (
         ...state,
         activeCell: getByIdActiveCell(action.payload.rowId, action.payload.id),
       };
+    case ExcelTableActionTypes.SET_TEXT_CELL:
+      return {
+        ...state,
+        rows: state.rows.map((row) => {
+          if (row.id === action.payload.rowId) {
+            return {
+              ...row,
+              cells: row.cells.map((cell) => {
+                if (cell.id === action.payload.cellId) {
+                  return {
+                    ...cell,
+                    textContent: action.payload.textContent,
+                  };
+                }
+                return cell;
+              }),
+            };
+          }
+          return row;
+        }),
+      };
     case ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA:
       return { ...state };
     default:

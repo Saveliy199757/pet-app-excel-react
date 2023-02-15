@@ -12,12 +12,7 @@ import { transformActiveCellInObj } from "../../helpers/transformActiveCellnObj"
 import { useActions } from "../../hooks/useActions";
 import { nextCell } from "../../helpers/nextCell";
 
-interface IProps {
-  rowsCount?: number;
-}
-
-const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
-  const elementRef = useRef(null);
+const Table = () => {
   const { rows, colls, activeCell } = useTypedSelector(
     (state) => state.excelTable
   );
@@ -38,7 +33,7 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
   }, [activeCell]);
 
   return (
-    <div ref={elementRef} className="excel__table">
+    <div className="excel__table">
       <Row height={DEFAULT_HEIGHT_ROW}>
         {colls.map((coll, index) => (
           <Coll key={coll.id} index={coll.id} width={coll.width}>
