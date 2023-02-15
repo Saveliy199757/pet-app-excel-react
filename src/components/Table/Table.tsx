@@ -1,33 +1,44 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import {
-  CODE,
   DEFAULT_HEIGHT_ROW,
-  DEFAULT_WIDTH_CELL,
   defaultRowsCount,
 } from "../../constans/table.constans";
 import Row from "./components/Row";
 import Coll from "./components/Coll";
 import Cell from "./components/Cell";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { getByIdActiveCell } from "../../helpers/activeCellPosition";
+import { transformActiveCellInObj } from "../../helpers/transformActiveCellnObj";
+import { useActions } from "../../hooks/useActions";
+import { nextCell } from "../../helpers/nextCell";
 
 interface IProps {
   rowsCount?: number;
 }
 
 const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
-  const { rows, colls } = useTypedSelector((state) => state.excelTable);
-  const handleOnKeyPress = useCallback((event: KeyboardEvent) => {
-    console.log(event);
-  }, []);
-  useLayoutEffect(() => {
-    document.addEventListener("keypress", handleOnKeyPress);
+  const elementRef = useRef(null);
+  const { rows, colls, activeCell } = useTypedSelector(
+    (state) => state.excelTable
+  );
+  const { selectCell } = useActions();
+  const handleOnKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      const { rowId, cellId } = transformActiveCellInObj(activeCell);
+      const result = nextCell(event.key, Number(rowId), Number(cellId));
+      selectCell(result.cellId, result.rowId);
+    },
+    [activeCell]
+  );
+  useEffect(() => {
+    document.addEventListener("keydown", handleOnKeyPress);
     return () => {
-      document.removeEventListener("keypress", handleOnKeyPress);
+      document.removeEventListener("keydown", handleOnKeyPress);
     };
-  }, []);
+  }, [activeCell]);
 
   return (
-    <div className="excel__table">
+    <div ref={elementRef} className="excel__table">
       <Row height={DEFAULT_HEIGHT_ROW}>
         {colls.map((coll, index) => (
           <Coll key={coll.id} index={coll.id} width={coll.width}>
@@ -36,8 +47,14 @@ const Table = ({ rowsCount = defaultRowsCount }: IProps) => {
         ))}
       </Row>
       {rows.map((row, rowId) => {
+        rowId = rowId + 1;
         const cellResult = row.cells.map((cell) => (
-          <Cell key={cell.id} rowId={rowId + 1} {...cell}></Cell>
+          <Cell
+            key={cell.id}
+            rowId={rowId}
+            isSelect={getByIdActiveCell(rowId, cell.id) === activeCell}
+            {...cell}
+          />
         ));
         return (
           <Row key={row.id} number={row.id} height={row.height}>

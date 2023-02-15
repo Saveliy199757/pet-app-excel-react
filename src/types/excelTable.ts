@@ -1,7 +1,6 @@
 export interface Cell {
   id: number;
   width: number;
-  isSelect: boolean;
 }
 export interface Row {
   id: number;
@@ -16,6 +15,7 @@ export interface Coll {
 export interface ExcelTable {
   rows: Row[];
   colls: Coll[];
+  activeCell: string;
 }
 export enum ExcelTableActionTypes {
   CHANGE_ROW_HEIGHT = "CHANGE_ROW_HEIGHT",

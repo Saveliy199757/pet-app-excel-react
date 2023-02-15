@@ -5,10 +5,12 @@ import {
 } from "../../types/excelTable";
 import { initRow } from "../../helpers/initRow";
 import { initColl } from "../../helpers/initColl";
+import { getByIdActiveCell } from "../../helpers/activeCellPosition";
 
 const initialState: ExcelTable = {
   rows: initRow(15),
   colls: initColl(),
+  activeCell: "1:1",
 };
 
 console.log(initialState);
@@ -33,6 +35,7 @@ export const excelTableReducer = (
       };
     case ExcelTableActionTypes.CHANGE_COLLS_WIDTH:
       return {
+        ...state,
         colls: state.colls.map((coll) => {
           if (coll.id === action.payload.id) {
             return {
@@ -60,34 +63,7 @@ export const excelTableReducer = (
     case ExcelTableActionTypes.SELECT_CELL:
       return {
         ...state,
-        rows: state.rows.map((row) => {
-          if (row.id === action.payload.rowId) {
-            return {
-              ...row,
-              cells: row.cells.map((cell) => {
-                if (cell.id === action.payload.id) {
-                  return {
-                    ...cell,
-                    isSelect: true,
-                  };
-                }
-                return {
-                  ...cell,
-                  isSelect: false,
-                };
-              }),
-            };
-          }
-          return {
-            ...row,
-            cells: row.cells.map((cell) => {
-              return {
-                ...cell,
-                isSelect: false,
-              };
-            }),
-          };
-        }),
+        activeCell: getByIdActiveCell(action.payload.rowId, action.payload.id),
       };
     case ExcelTableActionTypes.FETCH_EXCEL_TABLE_DATA:
       return { ...state };

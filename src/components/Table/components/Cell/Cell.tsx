@@ -19,7 +19,7 @@ const Cell = ({ children, id, rowId, width, isSelect }: IProps) => {
       //contentEditable
       data-key="${col}"
       data-type="cell"
-      data-id="${id}"
+      data-id={id}
       data-value="${content || ''}"
       //style="${styles}; width: ${width}"
     >
